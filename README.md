@@ -298,7 +298,7 @@ To view the results in the Azure portal, I will navigate to the Azure portal and
 ![alt text](images/azure-rg3.png)<p>
 
 **SSH Public Key**<p>
-![sshPublicKey](sshkey.png)<p>
+![sshPublicKey](images/sshkey.png)<p>
 
 **Azure Kubernetes Service Cluster**:<p>
 ![AKS-k8s](images/AKS-K8s.png)
