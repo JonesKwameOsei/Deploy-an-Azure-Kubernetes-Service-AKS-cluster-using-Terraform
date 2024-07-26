@@ -336,102 +336,22 @@ To apply the manifest, I will run the following command:
  1. Apply the ConfigMap: <p>
 
 ```sh
-kubectl apply -f K8s-Manifest/configmap.yaml
+kubectl apply -f configmap.yaml
 ```
-
-```Output
-configmap/rabbitmq-enabled-plugins created
-```
-
 2. Apply the secrets
 
 ```sh
-kubectl apply -f K8s-Manifest/secret.yaml
+kubectl apply -f secret.yaml
 ``` 
-
-```Oupt
-secret/rabbitmq-secret created
-```
 
 3. Apply the myStoreFrontWebApp.yml
 
 ```sh
-kubectl apply -f K8s-Manifest/myStoreFrontWebApp.yml
+kubectl apply -f myStoreFrontWebApp.yml
 ```
 
-**Output**:
 
-```Output
-deployment.apps/rabbitmq created
-configmap/rabbitmq-enabled-plugins created
-service/rabbitmq created
-deployment.apps/order-service created
-service/order-service created
-deployment.apps/product-service created
-service/product-service created
-deployment.apps/store-front created
-service/store-front created
-```
-### Test the Application
 
-Upon running the application, a Kubernetes service will make the application front end accessible to the internet. This may take a few minutes to complete. 
 
-1. To proceed with the testing, I will ensure that all pods are in the `Running` state by using the `kubectl get pods` command to check their status.
 
-```bash
-kubectl get pods
-```
 
-```Output
-NAME                               READY   STATUS     RESTARTS   AGE
-order-service-7768986445-sxsg4     0/1     Init:0/1   0          106s
-product-service-7566c548bd-fkqpn   1/1     Running    0          106s
-rabbitmq-5b988bb89d-nvnb6          1/1     Running    0          107s
-store-front-655f5c89cd-k92cl       1/1     Running    0          105s
-```
-
-2. To see the service running, I will run:
-
-```bash
-kubectl get svc
-```
-
-```Output
-NAME              TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)             
- AGE
-kubernetes        ClusterIP      10.0.0.1       <none>          443/TCP             
- 6h50m
-order-service     ClusterIP      10.0.66.113    <none>          3000/TCP             15m
-product-service   ClusterIP      10.0.138.16    <none>          3002/TCP            
- 15m
-rabbitmq          ClusterIP      10.0.240.239   <none>          5672/TCP,15672/TCP   15m
-store-front       LoadBalancer   10.0.240.14    135.237.17.19   80:30091/TCP         15m
-```
-
-3. To specifically check for a public IP address for the store-front application. Monitor progress using the `kubectl get service` command with the `--watch` argument.
-
-```bash
-kubectl get service store-front --watch
-```
-
-Once the EXTERNAL-IP address changes from pending to an actual public IP address, I will use `CTRL-C` to stop the kubectl watch process.
-
-The following example output shows a valid public IP address assigned to the service:
-
-```Output
-NAME          TYPE           CLUSTER-IP   EXTERNAL-IP     PORT(S)        AGE
-NAME          TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)        AGE
-store-front   LoadBalancer   10.0.144.188   172.214.62.171   80:30670/TCP   3m
-```
-
-4. To access the application, I will use the public IP address from the previous step to open a web browser and navigate to the application.
-
-![store-front product](images/storefront.png)<p>
-
-![store-front product](images/storefront2.png)<p>
-
-**Accessing the store cart**<p>
-
-![store-front cart](images/cart1.png)<p>
-
-![store-front cart](images/cart2.png)<p>
